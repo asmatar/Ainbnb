@@ -8,12 +8,18 @@ import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
 import Pagination from '../components/Pagination';
 const Search = ({searchResult}) => {
+    const [ress, setRess] = useState(searchResult.searchResult) 
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(6);
-      // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = searchResult.searchResult.slice(indexOfFirstPost, indexOfLastPost);
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = searchResult.searchResult.slice(indexOfFirstPost, indexOfLastPost);
+    console.log('je suis le searchresult:',searchResult.searchResult )
+    
+    console.log('je suis le currentPosts:',currentPosts)
+  console.log('je suis le currentPage:',currentPage)
+
     // Change page
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
@@ -28,21 +34,44 @@ const Search = ({searchResult}) => {
    const dayEnd = parseInt(format(new Date(formatedEndDate), 'dd'))
    const NightStay = (dayEnd - dayStart)
 
-        // filter with type
-   const [Type, setType] = useState('type')
-   const filteredType = searchResult.searchResult.filter((item) => Type.toLowerCase() === item.type.toLowerCase())
+    const [priceCost, setPriceCost] = useState('')
 
-        // filter with number of bedroom
-   const [nbBed, setNbBed] = useState('bedroom')
-   const filteredBed = searchResult.searchResult.filter((item) => parseInt(nbBed) === item.bedroom)
+   //COMMENTAIRE DE CHARLENE
+//Bon voilà, je t'ai mis ress et filter en state local, comme ça le visuel s'update au changement (voir .map ligne 441)
+const [filter, setFilter] = useState({}) 
+console.log("ress:",ress, "filter:", filter)
+console.log('je suis le ress:',ress )
+// console.log(filter.price)
+//COMMENTAIRE DE CHARLENE
+//La fonction qui va update tes filtres, appelée à chaque onChange
+function changeFilters(key, value){
+  let newFilter = filter;
+  newFilter[key]= value
+  setFilter(newFilter);
+ 
+  //Si ton user enleve un filtre on le degage de l'objet (il faut assigner à tes input une valeur par defaut de 'none' pour les string ou '-1' pour les number)
+  if(value === 'none' || value === -1 || value === '10'){
+    let newFilter = filter;
+    delete newFilter[key];
+    setFilter(newFilter)
+  }
+//COMMENTAIRE DE CHARLENE
+//Puis on appelle filterStuff pour filtrer les Infocard à afficher en fonction des nouveaux filtres
+ filterStuff();
+}
 
-            // filter with number of bedroom
-   const [priceCost, setPriceCost] = useState('')
-
-   const filteredPrice = searchResult.searchResult.filter((item) => parseInt(priceCost) >= item.price)
-
-
-    return (
+//COMMENTAIRE DE CHARLENE
+//La fonction qui filtre. 
+function filterStuff(){
+    setRess(searchResult.searchResult.filter(function(item) {
+    for (var key in filter) {
+    if (item[key] === undefined || item[key] != filter[key] )
+        return false;
+    }
+    return true;
+    })) ;
+}
+   return (
         <div>
             <Header 
             placeholder={`${location} | ${ranged} | ${numberOfGuest} Guests`}
@@ -56,29 +85,34 @@ const Search = ({searchResult}) => {
                 <div className='hidden lg:inline-flex mb-5 space-x-3 text-gray-800 whitespace-nowrap'>
                     {/* utility classname, we create a folder styles, with global, and create a utility classname, the globall.css must be import in _app.js */}
                     <button className='button '>Cancelation Flexibility</button>
-                    {/* <button className='button'>Type of place</button> */}
-
                     <select className='button' onChange ={(event) => 
-                        // console.log(event.target.value)}
-                        setType(event.target.value)}
-                        >
-                        <option disabled value='type'>type</option>
+                        // {setType( event.target.value)
+                        changeFilters("type", event.target.value)
+                        }
+                        > type
+                        {/* <option disabled value='Type' >Type</option> */}
+                        <option value='none' >Type</option>
+
                         <option value='room' >room</option>
                         <option value='Studio' >Studio</option>
                         
                     </select>
-                    {/* <button className='button'>Price</button> */}
                 <div>
-                    <input type="range" min="10" max="80" step='10' id="range" className='button' onChange ={(event) => setPriceCost(event.target.value)} />
-                    <output for="range" id="output">{priceCost}</output>
+                    <input type="range" min="10" max="90" step='1' id="range" className='button'
+                onChange ={(event) => 
+                    // setPriceCost( event.target.value)
+                    // changeFilters("price", event.target.value)
+                   setPriceCost(event.target.value)
+                        
+                    } />
+                    <output htmlFor="range" id="output">{priceCost}</output>
                 </div>
-
-
-                    <select className='button' onChange ={(event) => 
-                        // console.log(event.target.value)}
-                        setNbBed(event.target.value)}
+                    <select  className='button' onChange ={(event) => 
+                        // {setNbBed( event.target.value)
+                        changeFilters("bedroom",  parseInt( event.target.value))}
                         >
-                        <option disabled value='bedroom'>bedroom</option>
+                        <option value='-1'>bedrooms</option>
+                        {/* <option disabled value='bedroom'>bedroom</option> */}
                         <option value='1' >1</option>
                         <option value='2' >2</option>
                         <option value='3' >3</option>
@@ -90,21 +124,36 @@ const Search = ({searchResult}) => {
                 </div>
                 <Fade left>
                 <div className='flex flex-col'>
-                     {
-                    currentPosts.map(({img, location, title,description, price, total, star, details})=>(
-                        <InfoCard 
-                        NightStay={NightStay}
-                        key={img}
-                        img={img}
-                        location={location}
-                        title={title}
-                        description={description}
-                        price={price}
-                        total={total}
-                        star={star}
-                        details={details}
-                        />
-                    ))
+                    {console.log(priceCost)}
+                     { priceCost === '10' || !priceCost ? (
+                         <div className='flex flex-col'>
+                         {ress.map((res)=>
+                         <InfoCard 
+                         NightStay={res.NightStay}
+                         key={res.img}
+                         img={res.img}
+                         location={res.location}
+                         title={res.title}
+                         description={res.description}
+                         price={res.price}
+                         total={res.total}
+                         star={res.star}
+                         details={res.details}
+                         />
+                         )}
+                    </div>) : (ress.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
+                         <InfoCard 
+                         NightStay={res.NightStay}
+                         key={res.img}
+                         img={res.img}
+                         location={res.location}
+                         title={res.title}
+                         description={res.description}
+                         price={res.price}
+                         total={res.total}
+                         star={res.star}
+                         details={res.details}
+                         /> ))
                 }
                 </div>
                 </Fade>
@@ -134,14 +183,7 @@ export default Search
 // we use getServerSide props => everytime we go to the search page, we build the page
 // we can pass an argument to this fucion => context to pass router props into it
 export async function getServerSideProps(context) {
-    // const searchResult = await fetch('https://links.papareact.com/isz')
-    // .then(response => response.json())
 
-    // return {
-    //     props: {
-    //         searchResult,
-    //     }
-    // }
     const res = await fetch('http://localhost:3001/accommodation')
     const searchResult = await res.json()
     // .then(response => response.json())
