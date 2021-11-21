@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ReactMapGL, { Marker, Popup }
     // ,{ Marker, Popup } 
     from 'react-map-gl';
-const Map = ({currentPosts}) => {
+const Map = ({currentPosts, priceCost}) => {
 
     const [selectedLocation, setSelectedLocation] = useState({})
       // transform searchResult object into another one {latitude:, longitude} object
@@ -36,7 +36,7 @@ const Map = ({currentPosts}) => {
         mapboxApiAccessToken={process.env.mapbox_key}
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         >
-        {
+        { priceCost === '10' || !priceCost ? (
             currentPosts.map(result=>( 
                 <div key={result.id}>         
                 <Marker
@@ -44,7 +44,7 @@ const Map = ({currentPosts}) => {
                         latitude={parseFloat(result.lat)}
                         offsetLeft={-20}
                         offsettop={-10}
-                    >
+                    > 
                     <p onClick={()=>setSelectedLocation(result)} className='cursor-pointer font-bold animate-bounce py-1 px-2 bg-white rounded-full' aria-label='push-pin'>{result.price}$</p>
                     {
                     parseFloat(selectedLocation.long) === parseFloat(result.long) 
@@ -65,7 +65,38 @@ const Map = ({currentPosts}) => {
                     }
                     </Marker>
                 </div>
-            ))  
+            )) 
+        ):(
+            currentPosts.filter((item) => parseInt(priceCost) >= item.price).map(result=>( 
+                <div key={result.id}>         
+                <Marker
+                        longitude={parseFloat(result.long)}
+                        latitude={parseFloat(result.lat)}
+                        offsetLeft={-20}
+                        offsettop={-10}
+                    > 
+                    <p onClick={()=>setSelectedLocation(result)} className='cursor-pointer font-bold animate-bounce py-1 px-2 bg-white rounded-full' aria-label='push-pin'>{result.price}$</p>
+                    {
+                    parseFloat(selectedLocation.long) === parseFloat(result.long) 
+                    ? (
+                        <Popup 
+                        onClose={() => setSelectedLocation({})}
+                        closeOnClick={true} 
+                        latitude={parseFloat(result.lat)}
+                        longitude={parseFloat(result.long)}
+                        className='w-72'
+                        >
+                        {result.title}
+                          
+                        </Popup>
+                        ):(
+                        false
+                        )
+                    }
+                    </Marker>
+                </div>
+            )) 
+        )
         }
         </ReactMapGL>
     )

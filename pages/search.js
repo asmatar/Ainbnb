@@ -168,6 +168,7 @@ function filterStuff(){
                 </section>
                 <section className='hidden xl:inline-flex xl:w-[600px] 2xl:w-[800px] w-full'>
                     <Map 
+                    priceCost={priceCost}
                     currentPosts={currentPosts}
                     className='w-full' 
                     />
