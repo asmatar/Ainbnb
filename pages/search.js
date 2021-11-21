@@ -14,9 +14,9 @@ const Search = ({searchResult}) => {
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    console.log('je suis le searchresult:',searchResult.searchResult )
+    // console.log('je suis le searchresult:',searchResult.searchResult )
     
-    console.log('je suis le currentPage:',currentPage)
+    // console.log('je suis le currentPage:',currentPage)
     
     // Change page
     const paginate = pageNumber => setCurrentPage(pageNumber);
@@ -31,14 +31,15 @@ const Search = ({searchResult}) => {
     const dayStart = parseInt(format(new Date(formatedStartDate), 'dd'))
     const dayEnd = parseInt(format(new Date(formatedEndDate), 'dd'))
     const NightStay = (dayEnd - dayStart)
-    
+    console.log(NightStay)
+    console.log('dayEnd:', dayEnd, 'dayStart:', dayStart)
     const [priceCost, setPriceCost] = useState('')
     
     //COMMENTAIRE DE CHARLENE
     //Bon voilà, je t'ai mis ress et filter en state local, comme ça le visuel s'update au changement (voir .map ligne 441)
     const [filter, setFilter] = useState({}) 
-    console.log("ress:",ress, "filter:", filter)
-   console.log('je suis le ress:',ress )
+//     console.log("ress:",ress, "filter:", filter)
+//    console.log('je suis le ress:',ress )
    // console.log(filter.price)
    //COMMENTAIRE DE CHARLENE
    //La fonction qui va update tes filtres, appelée à chaque onChange
@@ -58,7 +59,7 @@ const Search = ({searchResult}) => {
         filterStuff();
     }
     const currentPosts = ress?.slice(indexOfFirstPost, indexOfLastPost);
-    console.log('je suis le currentPosts:',currentPosts)
+    // console.log('je suis le currentPosts:',currentPosts)
     
 //COMMENTAIRE DE CHARLENE
 //La fonction qui filtre. 
@@ -129,7 +130,7 @@ function filterStuff(){
                          <div className='flex flex-col'>
                          {currentPosts.map((res)=>
                          <InfoCard 
-                         NightStay={res.NightStay}
+                         NightStay={NightStay}
                          key={res.img}
                          img={res.img}
                          location={res.location}
@@ -143,7 +144,7 @@ function filterStuff(){
                          )}
                     </div>) : (currentPosts.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
                          <InfoCard 
-                         NightStay={res.NightStay}
+                         NightStay={NightStay}
                          key={res.img}
                          img={res.img}
                          location={res.location}
