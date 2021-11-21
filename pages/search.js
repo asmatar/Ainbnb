@@ -14,61 +14,61 @@ const Search = ({searchResult}) => {
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = searchResult.searchResult.slice(indexOfFirstPost, indexOfLastPost);
     console.log('je suis le searchresult:',searchResult.searchResult )
     
-    console.log('je suis le currentPosts:',currentPosts)
-  console.log('je suis le currentPage:',currentPage)
-
+    console.log('je suis le currentPage:',currentPage)
+    
     // Change page
     const paginate = pageNumber => setCurrentPage(pageNumber);
-
+    
     // to get the information from the url we use the router.query
     const router = useRouter()
     const {location, startDate, endDate, numberOfGuest} = router.query
     // we format the date with fns librairy
-   const formatedStartDate = format(new Date(startDate), "dd MMMM yy")
-   const formatedEndDate = format(new Date(endDate), "dd MMMM yy")
-   const ranged= `${formatedStartDate} - ${formatedEndDate}`
-   const dayStart = parseInt(format(new Date(formatedStartDate), 'dd'))
-   const dayEnd = parseInt(format(new Date(formatedEndDate), 'dd'))
-   const NightStay = (dayEnd - dayStart)
-
+    const formatedStartDate = format(new Date(startDate), "dd MMMM yy")
+    const formatedEndDate = format(new Date(endDate), "dd MMMM yy")
+    const ranged= `${formatedStartDate} - ${formatedEndDate}`
+    const dayStart = parseInt(format(new Date(formatedStartDate), 'dd'))
+    const dayEnd = parseInt(format(new Date(formatedEndDate), 'dd'))
+    const NightStay = (dayEnd - dayStart)
+    
     const [priceCost, setPriceCost] = useState('')
-
+    
+    //COMMENTAIRE DE CHARLENE
+    //Bon voilà, je t'ai mis ress et filter en state local, comme ça le visuel s'update au changement (voir .map ligne 441)
+    const [filter, setFilter] = useState({}) 
+    console.log("ress:",ress, "filter:", filter)
+   console.log('je suis le ress:',ress )
+   // console.log(filter.price)
    //COMMENTAIRE DE CHARLENE
-//Bon voilà, je t'ai mis ress et filter en state local, comme ça le visuel s'update au changement (voir .map ligne 441)
-const [filter, setFilter] = useState({}) 
-console.log("ress:",ress, "filter:", filter)
-console.log('je suis le ress:',ress )
-// console.log(filter.price)
-//COMMENTAIRE DE CHARLENE
-//La fonction qui va update tes filtres, appelée à chaque onChange
-function changeFilters(key, value){
-  let newFilter = filter;
-  newFilter[key]= value
-  setFilter(newFilter);
- 
-  //Si ton user enleve un filtre on le degage de l'objet (il faut assigner à tes input une valeur par defaut de 'none' pour les string ou '-1' pour les number)
-  if(value === 'none' || value === -1 || value === '10'){
-    let newFilter = filter;
-    delete newFilter[key];
-    setFilter(newFilter)
-  }
-//COMMENTAIRE DE CHARLENE
-//Puis on appelle filterStuff pour filtrer les Infocard à afficher en fonction des nouveaux filtres
- filterStuff();
-}
-
+   //La fonction qui va update tes filtres, appelée à chaque onChange
+   function changeFilters(key, value){
+       let newFilter = filter;
+       newFilter[key]= value
+       setFilter(newFilter);
+       
+       //Si ton user enleve un filtre on le degage de l'objet (il faut assigner à tes input une valeur par defaut de 'none' pour les string ou '-1' pour les number)
+       if(value === 'none' || value === -1 || value === '10'){
+           let newFilter = filter;
+           delete newFilter[key];
+           setFilter(newFilter)
+        }
+        //COMMENTAIRE DE CHARLENE
+        //Puis on appelle filterStuff pour filtrer les Infocard à afficher en fonction des nouveaux filtres
+        filterStuff();
+    }
+    const currentPosts = ress?.slice(indexOfFirstPost, indexOfLastPost);
+    console.log('je suis le currentPosts:',currentPosts)
+    
 //COMMENTAIRE DE CHARLENE
 //La fonction qui filtre. 
 function filterStuff(){
     setRess(searchResult.searchResult.filter(function(item) {
-    for (var key in filter) {
-    if (item[key] === undefined || item[key] != filter[key] )
-        return false;
-    }
-    return true;
+        for (var key in filter) {
+            if (item[key] === undefined || item[key] != filter[key] )
+            return false;
+        }
+        return true;
     })) ;
 }
    return (
@@ -127,7 +127,7 @@ function filterStuff(){
                     {console.log(priceCost)}
                      { priceCost === '10' || !priceCost ? (
                          <div className='flex flex-col'>
-                         {ress.map((res)=>
+                         {currentPosts.map((res)=>
                          <InfoCard 
                          NightStay={res.NightStay}
                          key={res.img}
@@ -141,7 +141,7 @@ function filterStuff(){
                          details={res.details}
                          />
                          )}
-                    </div>) : (ress.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
+                    </div>) : (currentPosts.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
                          <InfoCard 
                          NightStay={res.NightStay}
                          key={res.img}
@@ -161,7 +161,8 @@ function filterStuff(){
                     indexOfLastPost={indexOfLastPost}
                     indexOfFirstPost={indexOfFirstPost}
                     postsPerPage={postsPerPage} 
-                    totalPosts={searchResult.searchResult.length}
+                    // totalPosts={searchResult.searchResult.length}
+                    totalPosts={ress?.length}
                     paginate={paginate}
                     />
                 </section>
