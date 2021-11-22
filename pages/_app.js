@@ -1,6 +1,7 @@
 //import progress bar from npm librairy
 import ProgressBar from '@badrap/bar-of-progress';
 import "mapbox-gl/dist/mapbox-gl.css";
+import { Provider } from "next-auth/client";
 import Router from 'next/router';
 import 'tailwindcss/tailwind.css';
 import '../styles/global.css';
@@ -18,7 +19,11 @@ Router.events.on('routeChangeError', progress.finish)
 
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  
+  return <Provider session={pageProps.session}>
+    <Component {...pageProps} />
+  
+  </Provider>
 }
 
 export default MyApp

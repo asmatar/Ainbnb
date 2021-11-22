@@ -1,11 +1,14 @@
 import { GlobeAltIcon, MenuIcon, SearchIcon, UserCircleIcon, UsersIcon } from '@heroicons/react/solid';
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-const Header = ({placeholder}) => {
+const Header = ({placeholder }) => {
+    const [userSession]= useSession()
+    console.log(userSession.user)
     const router = useRouter();
 
     const [searchInput, setSearchInput] = useState('');
@@ -64,9 +67,20 @@ const Header = ({placeholder}) => {
                     <GlobeAltIcon className='h-6 cursor-pointer animate-spin' />
                 <div className='flex items-center space-x-2 border-2 p-2 rounded-full'>
                     <MenuIcon  className='h-6'/>
-                    <UserCircleIcon  className='h-6'/>
+                    {
+                    !userSession ? ( <UserCircleIcon  className='h-6'> </ UserCircleIcon> ) : (
+                       <img className='h-7 rounded-full' src={userSession.user.image} alt="" />
+                        )
+                }
+                
                 </div>
-                <UsersIcon  className='h-6'/>
+                {
+                    !userSession ? (<UsersIcon className='h-6 '> </UsersIcon> ) : (
+                        <p onClick={console.log('de rien')} className='text-sm font-bold'>{userSession.user.name}</p>
+                        )
+                }
+               
+               
             </div>
             {
                 searchInput && (
@@ -103,4 +117,13 @@ const Header = ({placeholder}) => {
 }
 
 export default Header
-
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context)
+//   console.log('je suis le context de get serverside',context)
+//   return {
+//     props: {
+//       session
+//     }
+//   }
+  
+// }

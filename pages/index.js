@@ -1,13 +1,16 @@
+import { useSession } from 'next-auth/client';
 import Head from 'next/head';
 import Fade from 'react-reveal/Fade';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import LargeCard from '../components/LargeCard';
+import Login from '../components/login';
 import MediumCard from '../components/MediumCard';
 import Smallcard from '../components/Smallcard';
-
-export default function Home({exploreData, cardsData}) {
+export default function Home({exploreData, cardsData, }) {
+  const [session] = useSession()
+  if (!session) return <Login/>
   console.log(cardsData)
   return (
     <div className="">
@@ -85,3 +88,13 @@ export async function getStaticProps() {
     }
   }
 }
+// export async function getServerSideProps(context) {
+//   console.log('dans serverside')
+//   const session = await getSession(context)
+//   // console.log('je suis le context de get serverside',context)
+//   return {
+//     props: {
+//       session
+//     }
+//   }  
+// }
