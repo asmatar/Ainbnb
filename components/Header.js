@@ -69,14 +69,14 @@ const Header = ({placeholder }) => {
                     <MenuIcon  className='h-6'/>
                     {
                     !userSession ? ( <UserCircleIcon  className='h-6'> </ UserCircleIcon> ) : (
-                       <img className='h-7 rounded-full' src={userSession.user.image} alt="" />
+                       <img onClick={console.log('okok')} className='h-7 rounded-full' src={userSession.user.image} alt="" />
                         )
                 }
                 
                 </div>
                 {
                     !userSession ? (<UsersIcon className='h-6 '> </UsersIcon> ) : (
-                        <p onClick={console.log('de rien')} className='text-sm font-bold'>{userSession.user.name}</p>
+                        <p className='text-sm font-bold'>{userSession.user.name}</p>
                         )
                 }
                
