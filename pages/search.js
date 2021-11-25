@@ -35,8 +35,7 @@ const Search = ({searchResult}) => {
     const dayStart = parseInt(format(new Date(formatedStartDate), 'dd'))
     const dayEnd = parseInt(format(new Date(formatedEndDate), 'dd'))
     const NightStay = (dayEnd - dayStart)
-    console.log(NightStay)
-    console.log('dayEnd:', dayEnd, 'dayStart:', dayStart)
+
     const [priceCost, setPriceCost] = useState('')
     
     //COMMENTAIRE DE CHARLENE
@@ -201,7 +200,7 @@ export async function getServerSideProps(context) {
     const res = await fetch('http://localhost:3001/accommodation')
     const searchResult = await res.json()
     // .then(response => response.json())
-    console.log(searchResult)
+    // console.log(searchResult)
     return {
         props: {
             searchResult,

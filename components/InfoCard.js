@@ -5,9 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 const InfoCard = ({img, location, title, description, star, price, details, NightStay, id}) => {
     let Tot = (NightStay * price)
-    console.log('price', price)
-    console.log('NightStay',typeof NightStay)
-    console.log(Tot)
+
     return (
         <Link href={`/search/${id}`}>
         <div className='flex flex-col py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t sm:flex-row'>
