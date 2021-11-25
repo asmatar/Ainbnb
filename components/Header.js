@@ -1,5 +1,5 @@
 import { GlobeAltIcon, MenuIcon, SearchIcon, UserCircleIcon, UsersIcon } from '@heroicons/react/solid';
-import { useSession } from 'next-auth/client';
+import { signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -66,10 +66,15 @@ const Header = ({placeholder }) => {
                 <p className='hidden md:inline cursor-pointer'>because a host</p>
                     <GlobeAltIcon className='h-6 cursor-pointer animate-spin' />
                 <div className='flex items-center space-x-2 border-2 p-2 rounded-full'>
+                    {console.log('localhost3000',window.location.origin)}
                     <MenuIcon  className='h-6'/>
                     {
                     !userSession ? ( <UserCircleIcon  className='h-6'> </ UserCircleIcon> ) : (
-                       <img onClick={console.log('okok')} className='h-7 rounded-full' src={userSession.user.image} alt="" />
+                       <img onClick={() => signOut({
+                        
+                            callbackUrl: `${window.location.origin}`
+                      
+                       })} className='h-7 rounded-full' src={userSession.user.image} alt="" />
                         )
                 }
                 

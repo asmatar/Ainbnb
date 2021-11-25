@@ -1,13 +1,15 @@
 import { HeartIcon } from '@heroicons/react/outline';
 import { StarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
-const InfoCard = ({img, location, title, description, star, price, details, NightStay}) => {
+const InfoCard = ({img, location, title, description, star, price, details, NightStay, id}) => {
     let Tot = (NightStay * price)
     console.log('price', price)
     console.log('NightStay',typeof NightStay)
     console.log(Tot)
     return (
+        <Link href={`/search/${id}`}>
         <div className='flex flex-col py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t sm:flex-row'>
             <div className='relative h-96 w-full sm:h-48 sm:w-72 md:h-52 md:w-80 flex-shrink-0 '>
                 <Image src={img} layout='fill' objectFit='cover' className='rounded-lg' />
@@ -32,6 +34,7 @@ const InfoCard = ({img, location, title, description, star, price, details, Nigh
                 </div>
             </div>
         </div>
+       </ Link>
     )
 }
 

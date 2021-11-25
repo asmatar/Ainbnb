@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { useRouter } from 'next/dist/client/router';
+// import Link from 'next/link';
 import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
 import Footer from '../components/Footer';
@@ -7,6 +8,9 @@ import Header from '../components/Header';
 import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
 import Pagination from '../components/Pagination';
+
+
+
 const Search = ({searchResult}) => {
     const [ress, setRess] = useState(searchResult.searchResult) 
     const [currentPage, setCurrentPage] = useState(1);
@@ -129,7 +133,13 @@ function filterStuff(){
                      { priceCost === '10' || !priceCost ? (
                          <div className='flex flex-col'>
                          {currentPosts.map((res)=>
+                     
+                        //href={{
+                        //      pathname:'/search/[id]',
+                        //      query: {id:res.id}
+                        //  }}>
                          <InfoCard 
+                         id={res.id}
                          NightStay={NightStay}
                          key={res.img}
                          img={res.img}
@@ -141,6 +151,7 @@ function filterStuff(){
                          star={res.star}
                          details={res.details}
                          />
+                        
                          )}
                     </div>) : (currentPosts.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
                          <InfoCard 

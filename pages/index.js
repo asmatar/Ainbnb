@@ -40,7 +40,7 @@ export default function Home({exploreData, cardsData, }) {
         </section>
           </Fade>
           <Fade right>
-        <section>
+        <section className=''>
           <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
           <div className='flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3'>
               {
