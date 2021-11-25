@@ -1,11 +1,17 @@
-import { clearStorage } from 'mapbox-gl';
 import { useRouter } from 'next/dist/client/router';
 import React, { useState } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-const Room = (oneRoom) => {
-    console.log('dans one room',oneRoom.oneRoom.searchResult)
-    const [room] = useState(oneRoom.oneRoom.searchResult)
+const Room = (accommodationDetail) => { 
+    // console.log('dans one room',oneRoom.oneRoom.searchResult)
+    console.log('accommodationDetail:', accommodationDetail)
+    console.log('dans one room',accommodationDetail.accommodationDetail.searchResult)
+    const [room] = useState(accommodationDetail.accommodationDetail.searchResult)
+    const [review] = useState(accommodationDetail.review.searchResult)
+    // console.log(review)
+    // console.log(room)
+    // const [reviewss] = useState(review)
+    // console.log('dans reviewAcco',reviewss)
         // to get the information from the url we use the router.query
         const router = useRouter()
     const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
@@ -20,7 +26,7 @@ console.log('dans id formatedStartDate:', formatedStartDate)
              <h2 className='text-3xl font-semibold pb-5'>{room.title}</h2>
              <div className='flex justify-between'> 
                 <div className='flex pb-6 text-gray-600'>
-                    <p className='text-black mr-1'>{room.star} </p><span className="underline">(164 reviews)</span> 
+                    <p className='text-black mr-1'>{room.star} </p><span className="underline">({review.length} reviews)</span> 
                     <p className='mx-6'>Superhost</p>
                     <p className='underline'>{room.location}</p>
                 </div>
@@ -87,7 +93,7 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                 <div className='border border-solid border-gray-300 rounded-lg p-8'>
                     <div className='flex justify-between mb-6'>
                         <div> <span className='font-medium text-xl'>£{room.price}</span> / night </div>
-                        <div><span className='font-medium'>{room.star}</span> <span className='text-gray-600 underline font-medium'> (164 reviews)</span></div>
+                        <div><span className='font-medium'>{room.star}</span> <span className='text-gray-600 underline font-medium'> ({review.length} reviews)</span></div>
                     </div>
                     <div className=' border border-solid border-gray-300 rounded-lg text-sm'>
                         <div className='flex justify-between p-2'>
@@ -117,7 +123,17 @@ console.log('dans id formatedStartDate:', formatedStartDate)
         </div>
         {/* review */}
         <div className='w-full h-full grid grid-cols-2 gap-x-24 border-b border-solid border-gray-300 '>
-            <div className='h-40'>
+
+            {
+                review.map((review)=>(
+                <div className='h-40'>
+                    <h5 className='font-semibold w-full'>{review.name}</h5>
+                    <p className='text-gray-500 mb-4'>August 2021</p>
+                    <p className>{review.review}</p>
+                </div>
+                ))
+            }
+            {/* <div className='h-40'>
                 <h5 className='font-semibold w-full'>Ilias</h5>
                 <p className='text-gray-500 mb-4'>August 2021</p>
                 <p className>This is the third time I stay at Lateef’s and every time it’s a wonderful experience. The flat is sparkling clean, very spacious and Lateef is so nice and helpful. 10/10 will always recommend.</p>
@@ -146,7 +162,7 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                 <h5 className='font-semibold w-full'>Ilias</h5>
                 <p className='text-gray-500 mb-4'>August 2021</p>
                 <p className>This is the third time I stay at Lateef’s and every time it’s a wonderful experience. The flat is sparkling clean, very spacious and Lateef is so nice and helpful. 10/10 will always recommend.</p>
-            </div>
+            </div> */}
         </div>
         </div>
         <Footer />
@@ -156,17 +172,20 @@ console.log('dans id formatedStartDate:', formatedStartDate)
 
 export default Room
 export async function getServerSideProps(context) {
-    console.log('context.query', context.query)
     const query = context.query.id
-    console.log('query', query)
-    clearStorage
-    const res = await fetch(`http://localhost:3001/accommodation/${query}`)
-    const oneRoom = await res.json()
-    // .then(response => response.json())
-    console.log(oneRoom)
+    const [accommodationDetails, reviews] = await Promise.all([
+        fetch(`http://localhost:3001/accommodation/${query}`),
+        fetch(`http://localhost:3001/accommodation/accomodationReview/${query}`)
+     ]);
+     const [accommodationDetail, review] = await Promise.all([
+         accommodationDetails.json(),
+         reviews.json()
+     ]);
     return {
         props: {
-            oneRoom,
+            accommodationDetail,
+            review
         }
-    }
+    };
+    
 }
