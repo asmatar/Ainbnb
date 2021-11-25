@@ -1,10 +1,16 @@
 import { clearStorage } from 'mapbox-gl';
+import { useRouter } from 'next/dist/client/router';
 import React, { useState } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 const Room = (oneRoom) => {
     console.log('dans one room',oneRoom.oneRoom.searchResult)
     const [room] = useState(oneRoom.oneRoom.searchResult)
+        // to get the information from the url we use the router.query
+        const router = useRouter()
+    const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
+console.log('dans id formatedStartDate:', formatedStartDate)
+    
     return (
         <>
         <Header />
@@ -25,19 +31,17 @@ const Room = (oneRoom) => {
              </div>
         </div>
         {/* image */}
-        <div className='flex relative '>
+        
+        <div className='flex cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out w-full '>
            
-            <div className='cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out '>
-                <img src={room.img} alt="" className='rounded-lg' />
-            </div>
-           {/* <img className='text-red-400 col-span-2 col-end-2' src="https://a0.muscache.com/im/pictures/cfd6c20d-f860-48b0-bfe6-053c5168d8c9.jpg?im_w=720" alt="" />
-           <img className='text-blue-400' src="https://a0.muscache.com/im/pictures/cfd6c20d-f860-48b0-bfe6-053c5168d8c9.jpg?im_w=720" alt="" />
-           <img className='text-yellow-400' src="https://a0.muscache.com/im/pictures/cfd6c20d-f860-48b0-bfe6-053c5168d8c9.jpg?im_w=720" alt="" />
-           <img className='text-gray-400' src="https://a0.muscache.com/im/pictures/cfd6c20d-f860-48b0-bfe6-053c5168d8c9.jpg?im_w=720" alt="" />
-           <img className='text-green-400' src="https://a0.muscache.com/im/pictures/cfd6c20d-f860-48b0-bfe6-053c5168d8c9.jpg?im_w=720" alt="" /> */}
+            {/* <div className='cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out w-full '> */}
+                <img src={room.img} alt="" layout='fill'
+                 objectFit='cover' className='rounded-lg w-10/12 h-5/6 max-h-[600px] mx-auto' />
+            {/* </div> */}
+
         </div>
          {/* leftside: titre, description 1 bedroom, wifi enchancer */}
-        <div className='flex py-12 w-full border-b border-solid border-gray-300 mb-6'>
+        <div className='flex py-10 w-full border-b border-solid border-gray-300 mb-6'>
             <div className='w-8/12 pr-20 '>
             <div className='flex border-b border-solid border-gray-300 pb-8 w-full'>
                 <div className='  w-full'>
@@ -82,23 +86,23 @@ const Room = (oneRoom) => {
             <div className='w-4/12 pl-3 '>
                 <div className='border border-solid border-gray-300 rounded-lg p-8'>
                     <div className='flex justify-between mb-6'>
-                        <div> <span className='font-medium text-xl'>€31</span> / night </div>
+                        <div> <span className='font-medium text-xl'>£{room.price}</span> / night </div>
                         <div><span className='font-medium'>{room.star}</span> <span className='text-gray-600 underline font-medium'> (164 reviews)</span></div>
                     </div>
                     <div className=' border border-solid border-gray-300 rounded-lg text-sm'>
                         <div className='flex justify-between p-2'>
                             <div >
                                 <p className='font-medium'>CHECK-IN</p>
-                                <p>12/15/2121</p>
+                                <p>{formatedStartDate}</p>
                              </div>
                              <div>
                             <p className='font-medium'>CHECK-OUT</p>
-                            <p>14/15/2121</p>
+                            <p>{formatedEndDate}</p>
                             </div>
                         </div>
                         <div className='border-t border-solid border-gray-300 p-2'>
                             <p className='font-medium'>guest</p>
-                            <p> 1 guest</p>
+                            <p> {numberOfGuest}</p>
                         </div>
                     </div>
 
@@ -106,7 +110,7 @@ const Room = (oneRoom) => {
                     
                     <div className='flex justify-between font-medium border-t border-solid border-gray-300 mt-2 pt-4'>
                         <p className=''>Total</p>
-                        <p> £ 130</p>
+                        <p> £ {Tot}</p>
                     </div>
                 </div>
             </div>

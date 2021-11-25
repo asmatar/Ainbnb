@@ -30,6 +30,7 @@ const Search = ({searchResult}) => {
     const {location, startDate, endDate, numberOfGuest} = router.query
     // we format the date with fns librairy
     const formatedStartDate = format(new Date(startDate), "dd MMMM yy")
+    console.log(formatedStartDate)
     const formatedEndDate = format(new Date(endDate), "dd MMMM yy")
     const ranged= `${formatedStartDate} - ${formatedEndDate}`
     const dayStart = parseInt(format(new Date(formatedStartDate), 'dd'))
@@ -75,6 +76,7 @@ function filterStuff(){
         return true;
     })) ;
 }
+
    return (
         <div>
             <Header 
@@ -104,19 +106,15 @@ function filterStuff(){
                 <div>
                     <input type="range" min="10" max="90" step='1' id="range" className='button'
                 onChange ={(event) => 
-                    // setPriceCost( event.target.value)
-                    // changeFilters("price", event.target.value)
-                   setPriceCost(event.target.value)
-                        
+
+                   setPriceCost(event.target.value)     
                     } />
                     <output htmlFor="range" id="output">{priceCost}</output>
                 </div>
                     <select  className='button' onChange ={(event) => 
-                        // {setNbBed( event.target.value)
                         changeFilters("bedroom",  parseInt( event.target.value))}
                         >
                         <option value='-1'>bedrooms</option>
-                        {/* <option disabled value='bedroom'>bedroom</option> */}
                         <option value='1' >1</option>
                         <option value='2' >2</option>
                         <option value='3' >3</option>
@@ -130,14 +128,14 @@ function filterStuff(){
                 <div className='flex flex-col'>
                     {console.log(priceCost)}
                      { priceCost === '10' || !priceCost ? (
-                         <div className='flex flex-col'>
+                         <div className='flex flex-col'
+                         >
                          {currentPosts.map((res)=>
                      
-                        //href={{
-                        //      pathname:'/search/[id]',
-                        //      query: {id:res.id}
-                        //  }}>
                          <InfoCard 
+                         formatedStartDate={formatedStartDate}
+                         formatedEndDate={formatedEndDate}
+                         numberOfGuest={numberOfGuest}
                          id={res.id}
                          NightStay={NightStay}
                          key={res.img}
@@ -154,8 +152,9 @@ function filterStuff(){
                          )}
                     </div>) : (currentPosts.filter((item) => parseInt(priceCost) >= item.price).map((res)=>
                          <InfoCard 
+                        
                          NightStay={NightStay}
-                         key={res.img}
+                         key={res.id}
                          img={res.img}
                          location={res.location}
                          title={res.title}
