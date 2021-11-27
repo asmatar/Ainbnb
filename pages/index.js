@@ -5,7 +5,7 @@ import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import LargeCard from '../components/LargeCard';
-import Login from '../components/login';
+import Login from '../components/Login';
 import MediumCard from '../components/MediumCard';
 import Smallcard from '../components/Smallcard';
 export default function Home({exploreData, cardsData, }) {
