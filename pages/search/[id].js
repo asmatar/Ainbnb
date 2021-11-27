@@ -90,9 +90,6 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                     <p className='text-gray-600 mb-8'>100% of recent guests gave the check-in process a 5-star rating.</p>
                        </div>
                    </div>
-                
-                    
-                
                 </div>
             </div>
             <div className='border-b border-solid border-gray-300 py-8'>
@@ -148,8 +145,8 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                             <span className='text-gray-600 underline font-medium'> ({review.length} reviews)</span></div>
                           
                     </div>
-                    <div className=' border border-solid border-gray-300 rounded-lg text-sm'>
-                        <div className='flex justify-between p-2'>
+                    <div className=' border border-solid border-gray-300 rounded-lg text-sm cursor-pointer'>
+                        <div className='flex justify-between p-2 '>
                             <div >
                                 <p className='font-medium'>CHECK-IN</p>
                                 <p>{formatedStartDate}</p>
@@ -183,14 +180,14 @@ console.log('dans id formatedStartDate:', formatedStartDate)
         </div>
         
         <div className='w-full h-full grid grid-cols-2 gap-x-24 border-b border-solid border-gray-300 '>
-            {
+            { review.length > 0 ? (
                 review.map((review)=>(
                 <div className='h-40'>
                     <h5 className='font-semibold w-full'>{review.name}</h5>
                     <p className='text-gray-500 mb-4'>August 2021</p>
                     <p className>{review.review}</p>
                 </div>
-                ))
+                ))) : ( <p className='mb-4'>there are no reviews for this accommodation </p> )
             }
     
         </div>
