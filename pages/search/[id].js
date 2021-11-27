@@ -196,13 +196,14 @@ console.log('dans id formatedStartDate:', formatedStartDate)
         </>
     )
 }
-
+// ${query}
 export default Room
 export async function getServerSideProps(context) {
     const query = context.query.id
+    console.log('query', query)
     const [accommodationDetails, reviews] = await Promise.all([
-        fetch(`http://localhost:3001/accommodation/${query}`),
-        fetch(`http://localhost:3001/accommodation/accomodationReview/${query}`)
+        fetch(`https://airbnb-arthur.herokuapp.com/accommodation/${query}`),
+        fetch(`https://airbnb-arthur.herokuapp.com/accommodation/accomodationReview/5`)
      ]);
      const [accommodationDetail, review] = await Promise.all([
          accommodationDetails.json(),

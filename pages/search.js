@@ -196,10 +196,9 @@ export default Search
 // we can pass an argument to this fucion => context to pass router props into it
 export async function getServerSideProps(context) {
 
-    const res = await fetch('http://localhost:3001/accommodation')
+    const res = await fetch('https://airbnb-arthur.herokuapp.com/accommodation')
     const searchResult = await res.json()
-    // .then(response => response.json())
-    // console.log(searchResult)
+
     return {
         props: {
             searchResult,
