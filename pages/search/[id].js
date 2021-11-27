@@ -15,6 +15,7 @@ const Room = (accommodationDetail) => {
     const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
 console.log('dans id formatedStartDate:', formatedStartDate)
     
+
     return (
         <>
         <Header />
@@ -28,19 +29,19 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                     <div className='flex items-center'>
                         <StarIcon className='h-5 text-red-400' /><p className='text-black mr-1'>{room.star} </p>
                         </div>
-                        <span className="underline">({review.length} reviews)</span> 
-                    <p className='mx-6'>Superhost</p>
+                        <span className="hidden sm:inline underline">({review.length} reviews)</span> 
+                    <p className='hidden sm:inline mx-6'>Superhost</p>
                     <p className='underline'>{room.location}</p>
                 </div>
                 <div className='flex'>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-4 sm:mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                    <a href="" className='mr-4 ml-1 underline'>Share</a>
+                    <a href="" className='hidden sm:inline mr-4 ml-1 underline'>Share</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
-                    <a href="" className='underline ml-1'>Save</a>
+                    <a href="" className='hidden sm:inline underline ml-1'>Save</a>
                 </div>
              </div>
         </div>
@@ -55,8 +56,8 @@ console.log('dans id formatedStartDate:', formatedStartDate)
 
         </div>
          {/* leftside: titre, description 1 bedroom, wifi enchancer */}
-        <div className='flex py-10 w-full border-b border-solid border-gray-300 mb-6'>
-            <div className='w-8/12 pr-20 '>
+        <div className='flex flex-col md:flex-row py-10 w-full border-b border-solid border-gray-300 mb-6'>
+            <div className='md:w-8/12 md:pr-10 lg:pr-20 '>
             <div className='flex border-b border-solid border-gray-300 pb-8 w-full'>
                 <div className='  w-full'>
                     <h3 className='text-2xl font-semibold '>{room.details} {room.location}</h3>
@@ -100,40 +101,40 @@ console.log('dans id formatedStartDate:', formatedStartDate)
             <div className='flex w-full pb-6'>
                 <div className="flex flex-col w-full leading-9">
                     <div className="flex my-4">
-                        <img src="/images/cuisine.png" alt="" className='w-8 mr-4'/> 
+                        <img src="/images/cuisine.png" alt="" className='w-8 mr-4 h-8'/> 
                         <p> Kitchen</p>
                     </div>
                     <div className="flex mb-4">
-                        <img src="/images/wifi.png" className='w-8 mr-4 '/>  
+                        <img src="/images/wifi.png" className='w-8 mr-4 h-8'/>  
                         <p >Wifi</p>
                     </div>
                     <div className="flex mb-4">
-                        <img src="/images/TV.png" className='w-8 mr-4'/>
+                        <img src="/images/TV.png" className='w-8 mr-4 h-8'/>
                         <p >cable</p> 
                     </div>
                     <div className="flex">
-                        <img src="/images/seche.png" className='w-8 mr-4'/>  
+                        <img src="/images/seche.png" className='w-8 mr-4 h-8'/>  
                         <p >Hair dryer</p>
                     </div>
                 </div>
                 <div className="flex flex-col w-full leading-9"> 
-                    <div className="flex mb-4"> 
-                    <img src="/images/smoke.png" className='w-8 mr-4'/>  
+                    <div className="flex my-4"> 
+                    <img src="/images/smoke.png" className='w-8 mr-4 h-8'/>  
                     <p className=''>Smoking allowed</p>
                     </div>
                     <div className="flex mb-4"> 
-                    <img src="/images/work.png" className='w-8 mr-4'/>  
+                    <img src="/images/work.png" className='w-8 mr-4 h-8'/>  
                     <p className=''>Dedicated workspace</p>
                     </div>
                     <div className="flex mb-4"> 
-                    <img src="/images/voiture.jpg" className='w-8 mr-4'/>  
+                    <img src="/images/voiture.jpg" className='w-8 mr-4 h-8'/>  
                     <p className=''>Paid parking off premises</p>
                     </div>
                 </div>
             </div>
             </div>
             {/* rightside */}
-            <div className='w-4/12 pl-3 '>
+            <div className='md:w-5/12 lg:w-4/12 pl-3 '>
                 <div className='border border-solid border-gray-300 rounded-lg p-8'>
                     <div className='flex justify-between mb-6'>
                         <div> <span className='font-medium text-xl'>£{room.price}</span> / night </div>
@@ -142,7 +143,8 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                             <StarIcon className='h-5 text-red-400' />
                             <span className='font-medium'>
                             {room.star}</span> 
-                            <span className='text-gray-600 underline font-medium'> ({review.length} reviews)</span></div>
+                            <span className='text-gray-600 underline font-medium'> ({review.length} reviews)</span>
+                            </div>
                           
                     </div>
                     <div className=' border border-solid border-gray-300 rounded-lg text-sm cursor-pointer'>

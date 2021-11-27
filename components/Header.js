@@ -81,7 +81,7 @@ const Header = ({placeholder }) => {
                 </div>
                 {
                     !userSession ? (<UsersIcon className='h-6 '> </UsersIcon> ) : (
-                        <p className='text-sm font-bold'>{userSession.user.name}</p>
+                        <p className='text-sm font-bold hidden sm:block'>{userSession.user.name}</p>
                         )
                 }
                
@@ -91,6 +91,7 @@ const Header = ({placeholder }) => {
                 searchInput && (
                 <div className='flex flex-col col-span-3 mx-auto py-4'>
                     <DateRangePicker 
+                    className='w-5/12 sm:w-full'
                     //ranges is the initial value to put to make it works
                     ranges={[selectionRange]}
                     // we can't buy beforre today
@@ -99,7 +100,7 @@ const Header = ({placeholder }) => {
                     rangeColors={['#FD5B61']}
                     onChange={handleSelect}
                     />
-                    <div className='flex items-center border-b mb-4'>
+                    <div className='flex items-center border-b mb-4 w-9/12 sm:w-full'>
                         <h2 className='text-2xl flex-grow font-semibold'>Number of Guests</h2>
                         <UsersIcon className='h-5' />
                         <input type="number" className='w-12 pl-2 text-lg outline-none text-red-400' 
@@ -110,7 +111,7 @@ const Header = ({placeholder }) => {
                         onChange={(event) => setNumberOfGuest(event.target.value)}
                         />
                     </div>
-                    <div className='flex'>
+                    <div className='flex w-9/12 sm:w-full'>
                         {/* onClick we wanna hide the calendar removing the input field from the useState */}
                         <button className='flex-grow text-gray-500 hover:bg-red-400 rounded-lg py-1 hover:text-white hover:rounded-lg transition duration-300 ease-out' onClick={()=>setSearchInput('')}> Cancel</button>
                         <button onClick={search} className='flex-grow text-red-500 rounded-lg hover:bg-red-400 py-1 hover:text-white hover:rounded-lg transition duration-300 ease-out'> Search</button>
