@@ -9,13 +9,15 @@ const Room = (accommodationDetail) => {
     console.log('dans one room',accommodationDetail.accommodationDetail.searchResult)
     const [room] = useState(accommodationDetail.accommodationDetail.searchResult)
     const [review] = useState(accommodationDetail.review.searchResult)
- 
+ // comit
         // to get the information from the url we use the router.query
         const router = useRouter()
     const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
 console.log('dans id formatedStartDate:', formatedStartDate)
     
-
+const test = () =>{
+    console.log('ok')
+}
     return (
         <>
         <Header />
