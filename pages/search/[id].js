@@ -15,9 +15,6 @@ const Room = (accommodationDetail) => {
     const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
 console.log('dans id formatedStartDate:', formatedStartDate)
     
-const test = () =>{
-    console.log('ok')
-}
     return (
         <>
         <Header />
@@ -207,7 +204,7 @@ export async function getServerSideProps(context) {
     console.log('query', query)
     const [accommodationDetails, reviews] = await Promise.all([
         fetch(`https://airbnb-arthur.herokuapp.com/accommodation/${query}`),
-        fetch(`https://airbnb-arthur.herokuapp.com/accommodation/accomodationReview/5`)
+        fetch(`https://airbnb-arthur.herokuapp.com/accommodation/accomodationReview/${query}`)
      ]);
      const [accommodationDetail, review] = await Promise.all([
          accommodationDetails.json(),
