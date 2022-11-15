@@ -11,7 +11,6 @@ import Smallcard from '../components/Smallcard';
 export default function Home({exploreData, cardsData, }) {
   const [session] = useSession()
   if (!session) return <Login/>
-  console.log(cardsData)
   return (
     <div className="">
       <Head>
@@ -73,13 +72,10 @@ export default function Home({exploreData, cardsData, }) {
 export async function getStaticProps() {
   //request to the server
   const exploreData = await fetch('https://links.papareact.com/pyp')
-  //we get the response
   .then((response)=> response.json());
 
   const cardsData = await fetch('https://links.papareact.com/zp1')
-  //we get the response
   .then((response)=> response.json());
-
 
   return {
     props : {
@@ -88,13 +84,3 @@ export async function getStaticProps() {
     }
   }
 }
-// export async function getServerSideProps(context) {
-//   console.log('dans serverside')
-//   const session = await getSession(context)
-//   // console.log('je suis le context de get serverside',context)
-//   return {
-//     props: {
-//       session
-//     }
-//   }  
-// }

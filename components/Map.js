@@ -1,9 +1,8 @@
 import getCenter from 'geolib/es/getCenter';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useState } from 'react';
-import ReactMapGL, { Marker, Popup }
-    // ,{ Marker, Popup } 
-    from 'react-map-gl';
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+
 const Map = ({currentPosts, priceCost}) => {
 
     const [selectedLocation, setSelectedLocation] = useState({})
@@ -17,7 +16,6 @@ const Map = ({currentPosts, priceCost}) => {
     // on the map we wanna be at the center around all thoses result
     const center = getCenter(coordinates)
 
-    
     // put props into the map
     const [viewport, setViewport] = useState({
         width:'100%',

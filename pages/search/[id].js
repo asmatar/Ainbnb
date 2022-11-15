@@ -3,17 +3,12 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useState } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-const Room = (accommodationDetail) => { 
-    // console.log('dans one room',oneRoom.oneRoom.searchResult)
-    console.log('accommodationDetail:', accommodationDetail)
-    console.log('dans one room',accommodationDetail.accommodationDetail.searchResult)
+const Room = (accommodationDetail) => {             
     const [room] = useState(accommodationDetail.accommodationDetail.searchResult)
     const [review] = useState(accommodationDetail.review.searchResult)
- // comit
-        // to get the information from the url we use the router.query
-        const router = useRouter()
+    // to get the information from the url we use the router.query
+    const router = useRouter()
     const {Tot, formatedStartDate, formatedEndDate, numberOfGuest} = router.query
-console.log('dans id formatedStartDate:', formatedStartDate)
     
     return (
         <>
@@ -44,15 +39,9 @@ console.log('dans id formatedStartDate:', formatedStartDate)
                 </div>
              </div>
         </div>
-        {/* image */}
         
         <div className='flex cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out w-full '>
-           
-            {/* <div className='cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out w-full '> */}
-                <img src={room.img} alt="" layout='fill'
-                 objectFit='cover' className='rounded-lg w-10/12 h-5/6 max-h-[600px] mx-auto' />
-            {/* </div> */}
-
+            <img src={room.img} alt="" layout='fill' objectFit='cover' className='rounded-lg w-10/12 h-5/6 max-h-[600px] mx-auto' />
         </div>
          {/* leftside: titre, description 1 bedroom, wifi enchancer */}
         <div className='flex flex-col md:flex-row py-10 w-full border-b border-solid border-gray-300 mb-6'>
@@ -200,8 +189,7 @@ console.log('dans id formatedStartDate:', formatedStartDate)
 // ${query}
 export default Room
 export async function getServerSideProps(context) {
-    const query = context.query.id
-    console.log('query', query)
+    const query = context.query.id    
     const [accommodationDetails, reviews] = await Promise.all([
         fetch(`https://airbnb-arthur.herokuapp.com/accommodation/${query}`),
         fetch(`https://airbnb-arthur.herokuapp.com/accommodation/accomodationReview/${query}`)
@@ -216,5 +204,4 @@ export async function getServerSideProps(context) {
             review
         }
     };
-    
 }

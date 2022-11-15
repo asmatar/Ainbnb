@@ -8,7 +8,6 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 const Header = ({placeholder }) => {
     const [userSession]= useSession()
-    console.log(userSession.user)
     const router = useRouter();
 
     const [searchInput, setSearchInput] = useState('');
@@ -66,7 +65,6 @@ const Header = ({placeholder }) => {
                 <p className='hidden md:inline cursor-pointer'>because a host</p>
                     <GlobeAltIcon className='h-6 cursor-pointer animate-spin' />
                 <div className='flex items-center space-x-2 border-2 p-2 rounded-full'>
-                    {console.log('localhost3000',window.location.origin)}
                     <MenuIcon  className='h-6'/>
                     {
                     !userSession ? ( <UserCircleIcon  className='h-6'> </ UserCircleIcon> ) : (
@@ -123,13 +121,3 @@ const Header = ({placeholder }) => {
 }
 
 export default Header
-// export async function getServerSideProps(context) {
-//   const session = await getSession(context)
-//   console.log('je suis le context de get serverside',context)
-//   return {
-//     props: {
-//       session
-//     }
-//   }
-  
-// }
