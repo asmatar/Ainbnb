@@ -17,6 +17,8 @@ find cool accomodation in London. I made the DB so i didn't create a lot of acco
 
 • you will be able to see my review, the reviews are fetching from the db, creating by myself
 
+• pagination system
+
 
 # Tecnologies
 
