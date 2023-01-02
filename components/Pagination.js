@@ -9,7 +9,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, indexOfFirstPost, inde
   }
 
   return (
-    <nav className='flex flex-col items-center w-full '>
+    <nav className='flex flex-col items-center w-full my-4'>
       <ul className='flex justify-center '>
         {pageNumbers.map((number, index) => (
           <li key={number} className='mx-1'>
